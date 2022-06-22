@@ -29,7 +29,7 @@ class Commands(commands.Cog):
         embed.add_field(name="Host OS", value=f"{platform.system()} {platform.release()}")
         embed.add_field(name="Python Version", value=platform.python_version())
         embed.add_field(name="Bot Source", value="https://github.com/kawaiizenbo/mettaton", inline=False)
-        embed.set_thumbnail(self.bot.user.display_avatar)
+        embed.set_thumbnail(url=self.bot.user.display_avatar)
         await ctx.respond(embed = embed)
 
     @slash_command(name="play")

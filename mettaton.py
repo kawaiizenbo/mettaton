@@ -8,7 +8,7 @@ description = """Mettaton."""
 intents = discord.Intents.default()
 intents.members = True
 
-bot = commands.Bot(description=description, intents=intents, debug_guilds=[913237315210588160])
+bot = commands.Bot(description=description, intents=intents)
 
 bot.add_cog(Commands(bot))
 

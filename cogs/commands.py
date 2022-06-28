@@ -28,6 +28,7 @@ class Commands(commands.Cog):
         embed.add_field(name="Pycord Version", value=discord.__version__)
         embed.add_field(name="Host OS", value=f"{platform.system()} {platform.release()}")
         embed.add_field(name="Python Version", value=platform.python_version())
+        embed.add_field(name="Server Count", value=len(self.bot.guilds))
         embed.add_field(name="Bot Source", value="https://github.com/kawaiizenbo/mettaton", inline=False)
         embed.set_thumbnail(url=self.bot.user.display_avatar)
         await ctx.respond(embed = embed)

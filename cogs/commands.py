@@ -116,6 +116,21 @@ class Commands(commands.Cog):
                 return await ctx.respond("Skipped sound.", ephemeral=not debug)
             return await ctx.respond("End of queue.", ephemeral=not debug)
         await ctx.respond("Nothing is playing.", ephemeral=not debug)
+
+    @slash_command(name="next")
+    @discord.default_permissions(mute_members=True)
+    async def skip(self, ctx):
+        """Skip current sound."""
+        voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
+        if voice.is_playing():
+            return await ctx.respond("Something is playing.", ephemeral=not debug)
+        voice.stop()
+        if len(Commands.queue) > 1:
+            voice.play(discord.FFmpegPCMAudio(Commands.queue[1]))
+            Commands.now_playing = f"uploaded/{Commands.queue[1]}"
+            Commands.queue.pop(1)
+            return await ctx.respond(f"Now playing \"{Commands.now_playing}\".", ephemeral=not debug)
+        return await ctx.respond("End of queue.", ephemeral=not debug)
     
     @slash_command(name="kill")
     async def kill(self, ctx):

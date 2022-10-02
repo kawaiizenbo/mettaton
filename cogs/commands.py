@@ -118,8 +118,7 @@ class Commands(commands.Cog):
         await ctx.respond("Nothing is playing.", ephemeral=not debug)
 
     @slash_command(name="next")
-    @discord.default_permissions(mute_members=True)
-    async def skip(self, ctx):
+    async def next(self, ctx):
         """Skip current sound."""
         voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
         if voice.is_playing():

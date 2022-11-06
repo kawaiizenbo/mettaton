@@ -95,7 +95,7 @@ class Commands(commands.Cog):
     @slash_command(name="leave")
     @discord.default_permissions(move_members=True)
     async def leave(self, ctx):
-        """Join Voice Channel."""
+        """Leave Voice Channel."""
         if ctx.voice_client is not None:
             await ctx.voice_client.disconnect()
             return await ctx.respond("Left voice channel", ephemeral=not debug)
@@ -116,20 +116,6 @@ class Commands(commands.Cog):
                 return await ctx.respond("Skipped sound.", ephemeral=not debug)
             return await ctx.respond("End of queue.", ephemeral=not debug)
         await ctx.respond("Nothing is playing.", ephemeral=not debug)
-
-    @slash_command(name="next")
-    async def next(self, ctx):
-        """Skip current sound."""
-        voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
-        if voice.is_playing():
-            return await ctx.respond("Something is playing.", ephemeral=not debug)
-        voice.stop()
-        if len(Commands.queue) > 1:
-            voice.play(discord.FFmpegPCMAudio(Commands.queue[1]))
-            Commands.now_playing = f"uploaded/{Commands.queue[1]}"
-            Commands.queue.pop(1)
-            return await ctx.respond(f"Now playing \"{Commands.now_playing}\".", ephemeral=not debug)
-        return await ctx.respond("End of queue.", ephemeral=not debug)
     
     @slash_command(name="kill")
     async def kill(self, ctx):
@@ -139,3 +125,13 @@ class Commands(commands.Cog):
         
         await ctx.respond("```\n * YOU WON!\n * You earned 800 XP and 0 gold.\n * Your LOVE increased.\n```")
         exit(0)
+
+    async def next(self, ctx):
+        voice = discord.utils.get(self.bot.voice_clients, guild=ctx.guild)
+        if voice.is_playing():
+            return
+        voice.stop()
+        if len(Commands.queue) > 1:
+            voice.play(discord.FFmpegPCMAudio(Commands.queue[1]))
+            Commands.now_playing = f"uploaded/{Commands.queue[1]}"
+            Commands.queue.pop(1)

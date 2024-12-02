@@ -121,7 +121,7 @@ class Commands(commands.Cog):
     async def kill(self, ctx):
         """Stop bot (bot owner only)"""
         if not await self.bot.is_owner(ctx.author):
-            return await ctx.respond("No permission.", ephemeral=not debug)
+            return await ctx.respond("But nobody came.", ephemeral=not debug)
         
         await ctx.respond("```\n * YOU WON!\n * You earned 800 XP and 0 gold.\n * Your LOVE increased.\n```")
         exit(0)
@@ -135,3 +135,5 @@ class Commands(commands.Cog):
             voice.play(discord.FFmpegPCMAudio(Commands.queue[1]))
             Commands.now_playing = f"uploaded/{Commands.queue[1]}"
             Commands.queue.pop(1)
+
+    
